@@ -50,7 +50,7 @@ public class Bot
                             String[] offerDetails = splitted[i].split(":");
                             bondsBuying.add(new Bond(offerDetails[0], offerDetails[1]));
                         } else if (splitted[i].equals("SELL")) {
-                            i++;
+                            continue;
                         } else {
                             String[] offerDetails = splitted[i].split(":");
                             bondsSelling.add(new Bond(offerDetails[0], offerDetails[1]));
