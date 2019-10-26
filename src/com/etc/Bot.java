@@ -104,11 +104,11 @@ public class Bot
                             Order.waitForReply(portofolio, reply, orderStack);
 
 
-//                            orderStack.addLast(new Order(lastOrderId++, "ADD", "VALBZ", false,
-//                                    5, valbzFairValue.first + 1));
-//                            to_exchange.println(orderStack.peekLast().orderMessage());
-//                            reply = from_exchange.readLine().trim();
-//                            Order.waitForReply(portofolio, reply, orderStack);
+                            orderStack.addLast(new Order(lastOrderId++, "ADD", "VALBZ", false,
+                                    portofolio.get("VALBZ"), valbzFairValue.first + 1));
+                            to_exchange.println(orderStack.peekLast().orderMessage());
+                            reply = from_exchange.readLine().trim();
+                            Order.waitForReply(portofolio, reply, orderStack);
                         }
                     }
 
