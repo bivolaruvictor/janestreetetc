@@ -45,12 +45,14 @@ public class Bot
                 } else if (splitted[0].equals("BOOK") && splitted[1].equals("BOND")) {
                     ArrayList<Bond> bondsBuying = new ArrayList<>();
                     ArrayList<Bond> bondsSelling = new ArrayList<>();
+                    boolean putInSelling = false;
                     for (int i = 3; i < splitted.length; i++) {
-                        if (!splitted[i].equals("SELL")) {
+                        if (splitted[i].equals("SELL")) {
+                            putInSelling = true;
+                        }
+                        if (!putInSelling) {
                             String[] offerDetails = splitted[i].split(":");
                             bondsBuying.add(new Bond(offerDetails[0], offerDetails[1]));
-                        } else if (splitted[i].equals("SELL")) {
-                            continue;
                         } else {
                             String[] offerDetails = splitted[i].split(":");
                             bondsSelling.add(new Bond(offerDetails[0], offerDetails[1]));
