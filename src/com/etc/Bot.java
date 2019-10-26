@@ -74,6 +74,8 @@ public class Bot
                             orderStack.push(new Order(lastOrderId++, "ADD", "BOND",
                                     true, howManyToBuy, bond.getPrice()));
                             to_exchange.println(orderStack.peekLast().orderMessage());
+                            System.out.println(orderStack.peekLast().orderMessage());
+                            break;
                         }
                     }
                     int howManyToSell = 0;
@@ -84,6 +86,8 @@ public class Bot
                             orderStack.push(new Order(lastOrderId++, "ADD", "BOND",
                                     false, howManyToSell, bond.getPrice()));
                             to_exchange.println(orderStack.peekLast().orderMessage());
+                            System.out.println(orderStack.peekLast().orderMessage());
+                            break;
                         }
                     }
                 } else if (splitted[0].equals("ACK")) {
