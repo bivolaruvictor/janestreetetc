@@ -68,9 +68,9 @@ public class Bot
                     Bond bestSelling = bondsSelling.get(0);
                     int howManyToBuy = 0;
                     for (Bond bond : bondsSelling) {
-                        if (bond.getPrice() <= 1000) {
+                        if (bond.getPrice() < 1000) {
                             howManyToBuy += bond.getQuantity();
-                        } else if (bond.getPrice() > 1000 && howManyToBuy != 0){
+                        } else if (bond.getPrice() >= 1000 && howManyToBuy != 0){
                             orderStack.push(new Order(lastOrderId++, "ADD", "BOND",
                                     true, howManyToBuy, bond.getPrice()));
                             to_exchange.println(orderStack.peekLast().orderMessage());
@@ -80,9 +80,9 @@ public class Bot
                     }
                     int howManyToSell = 0;
                     for (Bond bond : bondsBuying) {
-                        if (bond.getPrice() > 1000) {
+                        if (bond.getPrice() >= 1000) {
                             howManyToSell += bond.getQuantity();
-                        } else if (bond.getPrice() <= 1000 && howManyToSell != 0){
+                        } else if (bond.getPrice() < 1000 && howManyToSell != 0){
                             orderStack.push(new Order(lastOrderId++, "ADD", "BOND",
                                     false, howManyToSell, bond.getPrice()));
                             to_exchange.println(orderStack.peekLast().orderMessage());
