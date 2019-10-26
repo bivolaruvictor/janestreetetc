@@ -1,5 +1,8 @@
 package com.etc;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+
 public class Order {
     private Integer id; // id ul orderului
     private String type; // add / cancel
@@ -25,6 +28,22 @@ public class Order {
             directive = directive + "SELL";
         }
         return "ADD" + " " + id + " " + symbol + " " + directive + " " + price + " " + size;
+    }
+
+    public static void waitForReply(HashMap<String, Integer> portofolio, String reply, LinkedList<Order> stack) {
+        String[] splitted = reply.split(" ");
+        if (splitted[0].equals("ACK")) {
+            Order order = stack.peekLast();
+            if (Integer.parseInt(splitted[1]) == order.getId()) {
+                if (order.isDir()) {
+                    portofolio.put(order.getType(), portofolio.get(order.getType()) + order.getSize());
+                } else if (!order.isDir()) {
+                    portofolio.put(order.getType(), portofolio.get(order.getType()) - order.getSize());
+                }
+            }
+        } else if (splitted[0].equals("REJECT")) {
+            stack.pop();
+        }
     }
 
     @Override

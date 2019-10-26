@@ -66,42 +66,33 @@ public class Bot
                     System.out.println(bondsBuying);
                     System.out.println(bondsSelling);
                     int howManyToBuy = 0;
+                    Integer lastPrice = 0;
                     for (Bond bond : bondsSelling) {
                         if (bond.getPrice() < 1000) {
                             howManyToBuy += bond.getQuantity();
-                        } else if (howManyToBuy != 0){
+                            lastPrice = bond.getPrice();
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "BOND",
-                                    true, howManyToBuy, 1000));
+                                    true, howManyToBuy, lastPrice));
                             to_exchange.println(orderStack.peekLast().orderMessage());
                             System.out.println(orderStack.peekLast().orderMessage());
-                            break;
+                            reply = from_exchange.readLine().trim();
+                            System.out.println(reply);
+                            Order.waitForReply(portofolio, reply, orderStack);
                         }
                     }
                     int howManyToSell = 0;
                     for (Bond bond : bondsBuying) {
                         if (bond.getPrice() >= 1000) {
-                            howManyToSell += bond.getQuantity();
-                        } else if (howManyToSell != 0){
+                            howManyToSell = bond.getQuantity();
+                            lastPrice = bond.getPrice();
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "BOND",
-                                    false, howManyToSell, 1001));
+                                    false, howManyToSell, lastPrice));
                             to_exchange.println(orderStack.peekLast().orderMessage());
                             System.out.println(orderStack.peekLast().orderMessage());
-                            break;
+                            System.out.println(reply);
+                            Order.waitForReply(portofolio, reply, orderStack);
                         }
                     }
-                    System.out.println(orderStack);
-                    System.out.printf("%d %d", howManyToBuy, howManyToSell);
-                } else if (splitted[0].equals("ACK")) {
-                    Order order = orderStack.peekLast();
-                    if (Integer.parseInt(splitted[1]) == order.getId()) {
-                        if (order.isDir()) {
-                            portofolio.put(order.getType(), portofolio.get(order.getType()) + order.getSize());
-                        } else if (!order.isDir()) {
-                            portofolio.put(order.getType(), portofolio.get(order.getType()) - order.getSize());
-                        }
-                    }
-                } else if (splitted[0].equals("REJECT")) {
-                    orderStack.removeLast();
                 }
                 System.out.println(reply);
             }
