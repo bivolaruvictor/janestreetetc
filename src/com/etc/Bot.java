@@ -1,7 +1,6 @@
 package com.etc;
 
 
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -16,7 +15,7 @@ public class Bot
     {
         /* The boolean passed to the Configuration constructor dictates whether or not the
            bot is connecting to the prod or test exchange. Be careful with this switch! */
-        Configuration config = new Configuration(true);
+        Configuration config = new Configuration(false);
         try
         {
             Socket skt = new Socket(config.exchange_name(), config.port());
@@ -47,8 +46,8 @@ public class Bot
                         }
                     }
                 } else if (splitted[0].equals("BOOK") && splitted[1].equals("BOND")) {
-                    ArrayList<Bond> bondsBuying = new ArrayList<>();
-                    ArrayList<Bond> bondsSelling = new ArrayList<>();
+                    ArrayList<Security> bondsBuying = new ArrayList<>();
+                    ArrayList<Security> bondsSelling = new ArrayList<>();
                     boolean putInSelling = false;
                     for (int i = 3; i < splitted.length; i++) {
                         if (splitted[i].equals("SELL")) {
@@ -57,20 +56,20 @@ public class Bot
                         }
                         if (!putInSelling) {
                             String[] offerDetails = splitted[i].split(":");
-                            bondsBuying.add(new Bond(offerDetails[0], offerDetails[1]));
+                            bondsBuying.add(new Security(offerDetails[0], offerDetails[1]));
                         } else {
                             String[] offerDetails = splitted[i].split(":");
-                            bondsSelling.add(new Bond(offerDetails[0], offerDetails[1]));
+                            bondsSelling.add(new Security(offerDetails[0], offerDetails[1]));
                         }
                     }
                     System.out.println(bondsBuying);
                     System.out.println(bondsSelling);
                     int howManyToBuy = 0;
                     Integer lastPrice = 0;
-                    for (Bond bond : bondsSelling) {
-                        if (bond.getPrice() < 1000) {
-                            howManyToBuy += bond.getQuantity();
-                            lastPrice = bond.getPrice();
+                    for (Security security : bondsSelling) {
+                        if (security.getPrice() < 1000) {
+                            howManyToBuy += security.getQuantity();
+                            lastPrice = security.getPrice();
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "BOND",
                                     true, howManyToBuy, lastPrice));
                             to_exchange.println(orderStack.peekLast().orderMessage());
@@ -81,10 +80,10 @@ public class Bot
                         }
                     }
                     int howManyToSell = 0;
-                    for (Bond bond : bondsBuying) {
-                        if (bond.getPrice() >= 1000) {
-                            howManyToSell = bond.getQuantity();
-                            lastPrice = bond.getPrice();
+                    for (Security security : bondsBuying) {
+                        if (security.getPrice() >= 1000) {
+                            howManyToSell = security.getQuantity();
+                            lastPrice = security.getPrice();
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "BOND",
                                     false, howManyToSell, lastPrice));
                             to_exchange.println(orderStack.peekLast().orderMessage());
