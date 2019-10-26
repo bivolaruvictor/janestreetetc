@@ -105,14 +105,18 @@ public class Bot
                     System.out.println("BUYING VALE");
                     orderStack.addLast(new Order(lastOrderId++, "ADD", "VALE", true,
                             10, container.selling.get(0).getPrice()));
+                    reply = from_exchange.readLine().trim();
                     Order.waitForReply(portofolio, reply, orderStack);
                     orderStack.addLast(new Order(lastOrderId++, "CONVERT", "VALE", true,
                             portofolio.get("VALE")));
                     to_exchange.println(orderStack.peekLast().orderMessage());
-                    assert valbzFairValue != null;
+                    reply = from_exchange.readLine().trim();
+                    Order.waitForReply(portofolio, reply, orderStack);
                     orderStack.addLast(new Order(lastOrderId++, "ADD", "VALBZ", false,
                             5, valbzFairValue.first + 1));
                     to_exchange.println(orderStack.peekLast().orderMessage());
+                    reply = from_exchange.readLine().trim();
+                    Order.waitForReply(portofolio, reply, orderStack);
                 }
                 System.out.println(reply);
             }
