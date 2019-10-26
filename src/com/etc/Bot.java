@@ -39,7 +39,7 @@ public class Bot
 
             while (true) {
                 Integer lastOrderId = 1;
-                Pair<Integer> valbzFairValue = null;
+                Pair<Integer> valbzFairValue = new Pair<>(0, 0);
                 String reply = from_exchange.readLine().trim();
                 String[] splitted = reply.split(" ");
                 if (splitted[0].equals("HELLO")) {
