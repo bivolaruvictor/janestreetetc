@@ -96,6 +96,7 @@ public class Bot
                             System.out.println("BUYING VALE");
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "VALE", true,
                                     2, container.selling.get(0).getPrice()));
+                            to_exchange.println(orderStack.peekLast().orderMessage());
                             reply = from_exchange.readLine().trim();
                             Order.waitForReply(portofolio, reply, orderStack);
                             orderStack.addLast(new Order(lastOrderId++, "CONVERT", "VALE", true,
