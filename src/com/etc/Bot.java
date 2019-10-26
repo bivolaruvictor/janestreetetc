@@ -80,9 +80,9 @@ public class Bot
                     }
                     int howManyToSell = 0;
                     for (Bond bond : bondsBuying) {
-                        if (bond.getPrice() >= 1000) {
+                        if (bond.getPrice() > 1000) {
                             howManyToSell += bond.getQuantity();
-                        } else if (bond.getPrice() < 1000 && howManyToSell != 0){
+                        } else if (bond.getPrice() <= 1000 && howManyToSell != 0){
                             orderStack.push(new Order(lastOrderId++, "ADD", "BOND",
                                     false, howManyToSell, bond.getPrice()));
                             to_exchange.println(orderStack.peekLast().orderMessage());
@@ -99,6 +99,8 @@ public class Bot
                             portofolio.put(order.getType(), portofolio.get(order.getType()) - order.getSize());
                         }
                     }
+                } else if (splitted[0].equals("REJECT")) {
+                    orderStack.pop();
                 }
                 System.out.println(reply);
             }
