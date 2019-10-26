@@ -85,7 +85,7 @@ public class Bot
                     valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
                     System.out.println("VALBZ FAIR VALUE = " + valbzFairValue.toString());
                 }
-                else if (splitted[0].equals("BOOK") && splitted[1].equals("VALE") && valbzFairValue != null) {
+                else if (splitted[0].equals("BOOK") && splitted[1].equals("VALE")) {
                     SecurityContainer container = new SecurityContainer(splitted);
 //                    if ((valbzFairValue.first - container.buying.get(0).getPrice()) > 10) {
 //                        System.out.println("BUYING VALE");
