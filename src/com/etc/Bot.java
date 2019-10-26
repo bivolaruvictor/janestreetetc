@@ -1,12 +1,14 @@
 package com.etc;
 
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Bot
 {
@@ -29,8 +31,10 @@ public class Bot
             */
             HashMap<String, Integer> portofolio = new HashMap<>();
             to_exchange.println(("HELLO " + config.team_name).toUpperCase());
+            LinkedList<Order> orderStack = new LinkedList<>();
 
             while (true) {
+                Integer lastOrderId = 1;
                 String reply = from_exchange.readLine().trim();
 //            System.err.printf("The exchange replied: %s\n", reply);
 
@@ -59,8 +63,38 @@ public class Bot
                             bondsSelling.add(new Bond(offerDetails[0], offerDetails[1]));
                         }
                     }
-                    System.out.println(bondsBuying);
-                    System.out.println(bondsSelling);
+
+                    Bond bestBuying = bondsBuying.get(0);
+                    Bond bestSelling = bondsSelling.get(0);
+                    int howManyToBuy = 0;
+                    for (Bond bond : bondsSelling) {
+                        if (bond.getPrice() <= 1000) {
+                            howManyToBuy += bond.getQuantity();
+                        } else {
+                            orderStack.push(new Order(lastOrderId++, "ADD", "BOND",
+                                    true, howManyToBuy, bond.getPrice()));
+                            to_exchange.println(orderStack.peekLast().orderMessage());
+                        }
+                    }
+                    int howManyToSell = 0;
+                    for (Bond bond : bondsBuying) {
+                        if (bond.getPrice() >= 1000) {
+                            howManyToSell += bond.getQuantity();
+                        } else {
+                            orderStack.push(new Order(lastOrderId++, "ADD", "BOND",
+                                    false, howManyToSell, bond.getPrice()));
+                            to_exchange.println(orderStack.peekLast().orderMessage());
+                        }
+                    }
+                } else if (splitted[0].equals("ACK")) {
+                    Order order = orderStack.peekLast();
+                    if (Integer.parseInt(splitted[1]) == order.getId()) {
+                        if (order.isDir()) {
+                            portofolio.put(order.getType(), portofolio.get(order.getType()) + order.getSize());
+                        } else if (!order.isDir()) {
+                            portofolio.put(order.getType(), portofolio.get(order.getType()) - order.getSize());
+                        }
+                    }
                 }
                 System.out.println(reply);
             }

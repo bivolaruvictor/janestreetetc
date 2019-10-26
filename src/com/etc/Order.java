@@ -7,4 +7,47 @@ public class Order {
     private boolean dir; // true - buy false - sell
     private Integer size;
     private Integer price;
+
+    public Order(Integer id, String type, String symbol, boolean dir, int size, Integer price) {
+        this.id = id;
+        this.type = type;
+        this.symbol = symbol;
+        this.dir = dir;
+        this.size = size;
+        this.price = price;
+    }
+
+    public String orderMessage() {
+        String directive = "";
+        if (dir) {
+            directive = directive + "BUY";
+        } else {
+            directive = directive + "SELL";
+        }
+        return "ADD" + id + symbol + directive + price + size;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public boolean isDir() {
+        return dir;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
 }
