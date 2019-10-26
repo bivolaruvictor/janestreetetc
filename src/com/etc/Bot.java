@@ -150,7 +150,7 @@ public class Bot
                 } else if (splitted[0].equals("BOOK") && (splitted[1].equals("GS") || splitted[1].equals("MS") ||
                         splitted[1].equals("WFC") || splitted[1].equals("XLF"))) {
                     SecurityContainer container = new SecurityContainer(splitted);
-                    String type = ;
+
                     if (container.buying.get(0).getPrice() > container.selling.get(0).getPrice()) {
                         orderStack.addLast(new Order(lastOrderId++, "ADD", splitted[1], false,
                                 10, container.buying.get(0).getPrice() + 1));
