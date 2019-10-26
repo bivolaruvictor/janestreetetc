@@ -24,7 +24,7 @@ public class Order {
         } else {
             directive = directive + "SELL";
         }
-        return "ADD" + id + symbol + directive + price + size;
+        return "ADD" + " " + id + " " + symbol + " " + directive + " " + price + " " + size;
     }
 
     public String getType() {
