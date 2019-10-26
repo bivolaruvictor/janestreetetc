@@ -1,6 +1,5 @@
 package com.etc;
 
-import java.net.Inet4Address;
 import java.util.ArrayList;
 
 public class Valbz extends Security {
@@ -18,7 +17,11 @@ public class Valbz extends Security {
             buyFairValue += security.getPrice();
             count++;
         }
-        count == 0 ? buyFairValue /= count : buyFairValue = 0;
+        if (count == 0) {
+            buyFairValue /= count
+        } else {
+            buyFairValue = 0;
+        }
 
         count = 0;
         for (Security security : sell) {
@@ -26,7 +29,11 @@ public class Valbz extends Security {
             count++;
         }
         sellFairValue /= count;
-        count == 0 ? sellFairValue /= count : sellFairValue = 0;
+        if (count == 0){
+            sellFairValue /= count
+        } else {
+            sellFairValue = 0;
+        }
         return new Pair<>(buyFairValue, sellFairValue);
     }
 }
