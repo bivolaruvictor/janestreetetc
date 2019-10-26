@@ -50,69 +50,69 @@ public class Bot
                         }
                     }
                 }
-//                else if (splitted[0].equals("BOOK") && splitted[1].equals("BOND")) {
-//                    SecurityContainer container = new SecurityContainer(splitted);
-//                    int howManyToBuy = 0;
-//                    Integer lastPrice = 0;
-//                    for (Security security : container.buying) {
-//                        if (security.getPrice() < 1000) {
-//                            howManyToBuy += security.getQuantity();
-//                            lastPrice = security.getPrice();
-//                            orderStack.addLast(new Order(lastOrderId++, "ADD", "BOND",
-//                                    true, howManyToBuy, lastPrice));
-//                            to_exchange.println(orderStack.peekLast().orderMessage());
-//                            System.out.println(orderStack.peekLast().orderMessage());
-//                            reply = from_exchange.readLine().trim();
-//                            System.out.println(reply);
-//                            Order.waitForReply(portofolio, reply, orderStack);
-//                        }
-//                    }
-//                    int howManyToSell = 0;
-//                    for (Security security : container.selling) {
-//                        if (security.getPrice() >= 1000) {
-//                            howManyToSell = security.getQuantity();
-//                            lastPrice = security.getPrice();
-//                            orderStack.addLast(new Order(lastOrderId++, "ADD", "BOND",
-//                                    false, howManyToSell, lastPrice));
-//                            to_exchange.println(orderStack.peekLast().orderMessage());
-//                            System.out.println(orderStack.peekLast().orderMessage());
-//                            System.out.println(reply);
-//                            Order.waitForReply(portofolio, reply, orderStack);
-//                        }
-//                    }
-//                }
-                else if (splitted[0].equals("BOOK") && splitted[1].equals("VALBZ")) {
-                    System.out.println("Am intrat pe valbzzzzzzzzzzzzzzzzzzzzz!!!!!!");
+                else if (splitted[0].equals("BOOK") && splitted[1].equals("BOND")) {
                     SecurityContainer container = new SecurityContainer(splitted);
-                    valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
-                    System.out.println("VALBZ FAIR VALUE = " + valbzFairValue.toString());
-                }
-                else if (splitted[0].equals("BOOK") && splitted[1].equals("VALE")) {
-                    SecurityContainer container = new SecurityContainer(splitted);
-                    //valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
-                    if (!valbzFairValue.first.equals(0) && !valbzFairValue.second.equals(0)) {
-                        System.out.println("Am intrat pe primul!!!!!!");
-                        if ((valbzFairValue.first - container.buying.get(0).getPrice()) > 10) {
-                            System.out.println("Am intrat pe al doilea!!!!!!");
-                            System.out.println("BUYING VALE");
-                            orderStack.addLast(new Order(lastOrderId++, "ADD", "VALE", true,
-                                    10, container.selling.get(0).getPrice()));
-                            reply = from_exchange.readLine().trim();
-                            Order.waitForReply(portofolio, reply, orderStack);
-                            orderStack.addLast(new Order(lastOrderId++, "CONVERT", "VALE", true,
-                                    portofolio.get("VALE")));
+                    int howManyToBuy = 0;
+                    Integer lastPrice = 0;
+                    for (Security security : container.buying) {
+                        if (security.getPrice() < 1000 && portofolio.get("BOND") < 100) {
+                            howManyToBuy += security.getQuantity();
+                            lastPrice = security.getPrice();
+                            orderStack.addLast(new Order(lastOrderId++, "ADD", "BOND",
+                                    true, howManyToBuy, lastPrice));
                             to_exchange.println(orderStack.peekLast().orderMessage());
+                            System.out.println(orderStack.peekLast().orderMessage());
                             reply = from_exchange.readLine().trim();
-                            Order.waitForReply(portofolio, reply, orderStack);
-                            orderStack.addLast(new Order(lastOrderId++, "ADD", "VALBZ", false,
-                                    5, valbzFairValue.first + 1));
-                            to_exchange.println(orderStack.peekLast().orderMessage());
-                            reply = from_exchange.readLine().trim();
+                            System.out.println(reply);
                             Order.waitForReply(portofolio, reply, orderStack);
                         }
                     }
-
+                    int howManyToSell = 0;
+                    for (Security security : container.selling) {
+                        if (security.getPrice() >= 1000 && portofolio.get("BOND") > -100) {
+                            howManyToSell = security.getQuantity();
+                            lastPrice = security.getPrice();
+                            orderStack.addLast(new Order(lastOrderId++, "ADD", "BOND",
+                                    false, howManyToSell, lastPrice));
+                            to_exchange.println(orderStack.peekLast().orderMessage());
+                            System.out.println(orderStack.peekLast().orderMessage());
+                            System.out.println(reply);
+                            Order.waitForReply(portofolio, reply, orderStack);
+                        }
+                    }
                 }
+//                else if (splitted[0].equals("BOOK") && splitted[1].equals("VALBZ")) {
+//                    System.out.println("Am intrat pe valbzzzzzzzzzzzzzzzzzzzzz!!!!!!");
+//                    SecurityContainer container = new SecurityContainer(splitted);
+//                    valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
+//                    System.out.println("VALBZ FAIR VALUE = " + valbzFairValue.toString());
+//                }
+//                else if (splitted[0].equals("BOOK") && splitted[1].equals("VALE")) {
+//                    SecurityContainer container = new SecurityContainer(splitted);
+//                    //valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
+//                    if (!valbzFairValue.first.equals(0) && !valbzFairValue.second.equals(0)) {
+//                        System.out.println("Am intrat pe primul!!!!!!");
+//                        if ((valbzFairValue.first - container.buying.get(0).getPrice()) > 10) {
+//                            System.out.println("Am intrat pe al doilea!!!!!!");
+//                            System.out.println("BUYING VALE");
+//                            orderStack.addLast(new Order(lastOrderId++, "ADD", "VALE", true,
+//                                    10, container.selling.get(0).getPrice()));
+//                            reply = from_exchange.readLine().trim();
+//                            Order.waitForReply(portofolio, reply, orderStack);
+//                            orderStack.addLast(new Order(lastOrderId++, "CONVERT", "VALE", true,
+//                                    portofolio.get("VALE")));
+//                            to_exchange.println(orderStack.peekLast().orderMessage());
+//                            reply = from_exchange.readLine().trim();
+//                            Order.waitForReply(portofolio, reply, orderStack);
+//                            orderStack.addLast(new Order(lastOrderId++, "ADD", "VALBZ", false,
+//                                    5, valbzFairValue.first + 1));
+//                            to_exchange.println(orderStack.peekLast().orderMessage());
+//                            reply = from_exchange.readLine().trim();
+//                            Order.waitForReply(portofolio, reply, orderStack);
+//                        }
+//                    }
+//
+//                }
                 System.out.println(reply);
             }
         }
