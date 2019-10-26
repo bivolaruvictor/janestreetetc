@@ -71,7 +71,7 @@ public class Bot
                             howManyToBuy += bond.getQuantity();
                         } else if (howManyToBuy != 0){
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "BOND",
-                                    true, howManyToBuy, bond.getPrice()));
+                                    true, howManyToBuy, 999));
                             to_exchange.println(orderStack.peekLast().orderMessage());
                             System.out.println(orderStack.peekLast().orderMessage());
                             break;
@@ -83,7 +83,7 @@ public class Bot
                             howManyToSell += bond.getQuantity();
                         } else if (howManyToSell != 0){
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "BOND",
-                                    false, howManyToSell, bond.getPrice()));
+                                    false, howManyToSell, 1001));
                             to_exchange.println(orderStack.peekLast().orderMessage());
                             System.out.println(orderStack.peekLast().orderMessage());
                             break;
