@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Bot
@@ -41,6 +42,22 @@ public class Bot
                             portofolio.put(position[0], Integer.parseInt(position[1]));
                         }
                     }
+                } else if (splitted[0].equals("BOOK") && splitted[1].equals("BOND")) {
+                    ArrayList<Bond> bondsBuying = new ArrayList<>();
+                    ArrayList<Bond> bondsSelling = new ArrayList<>();
+                    for (int i = 3; i < splitted.length; i++) {
+                        if (!splitted[i].equals("SELL")) {
+                            String[] offerDetails = splitted[i].split(":");
+                            bondsBuying.add(new Bond(offerDetails[0], offerDetails[1]));
+                        } else if (splitted[i].equals("SELL")) {
+                            i++;
+                        } else {
+                            String[] offerDetails = splitted[i].split(":");
+                            bondsSelling.add(new Bond(offerDetails[0], offerDetails[1]));
+                        }
+                    }
+                    System.out.println(bondsBuying);
+                    System.out.println(bondsSelling);
                 }
                 System.out.println(reply);
             }
