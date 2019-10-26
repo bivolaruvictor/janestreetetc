@@ -111,6 +111,7 @@ public class Bot
                     to_exchange.println(orderStack.peekLast().orderMessage());
                     orderStack.addLast(new Order(lastOrderId++, "ADD", "VALBZ", false,
                             5, valbzFairValue.first + 1));
+                    to_exchange.println(orderStack.peekLast().orderMessage());
                 }
                 System.out.println(reply);
             }
