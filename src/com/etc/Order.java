@@ -20,6 +20,15 @@ public class Order {
         this.price = price;
     }
 
+    public Order(Integer id, String type, String symbol, boolean dir, Integer size) {
+        this.id = id;
+        this.type = type;
+        this.symbol = symbol;
+        this.dir = dir;
+        this.size = size;
+        this.price = 0;
+    }
+
     public String orderMessage() {
         String directive = "";
         if (dir == true) {
@@ -27,7 +36,11 @@ public class Order {
         } else if (dir == false){
             directive = directive + "SELL";
         }
-        return "ADD" + " " + id + " " + symbol + " " + directive + " " + price + " " + size;
+        if (price > 0) {
+            return type + " " + id + " " + symbol + " " + directive + " " + price + " " + size;
+        } else {
+            return type + " " + id + " " + symbol + " " + directive + " " + size;
+        }
     }
 
     public static void waitForReply(HashMap<String, Integer> portofolio, String reply, LinkedList<Order> stack) {

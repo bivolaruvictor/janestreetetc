@@ -1,11 +1,11 @@
 package com.etc;
 
 
+import javax.sound.midi.Soundbank;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -48,10 +48,9 @@ public class Bot
                             portofolio.put(position[0], Integer.parseInt(position[1]));
                         }
                     }
-                } else if (splitted[0].equals("BOOK") && splitted[1].equals("BOND")) {
+                }
+                else if (splitted[0].equals("BOOK") && splitted[1].equals("BOND")) {
                     SecurityContainer container = new SecurityContainer(splitted);
-                    System.out.println(container.buying);
-                    System.out.println(container.selling);
                     int howManyToBuy = 0;
                     Integer lastPrice = 0;
                     for (Security security : container.buying) {
@@ -80,12 +79,28 @@ public class Bot
                             Order.waitForReply(portofolio, reply, orderStack);
                         }
                     }
-                } else if (splitted[0].equals("BOOK") && splitted[1].equals("VALBZ")) {
+                }
+                else if (splitted[0].equals("BOOK") && splitted[1].equals("VALBZ")) {
                     SecurityContainer container = new SecurityContainer(splitted);
-                    System.out.println(container.buying);
-                    System.out.println(container.selling);
                     valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
                     System.out.println("VALBZ FAIR VALUE = " + valbzFairValue.toString());
+                }
+                else if (splitted[0].equals("BOOK") && splitted[1].equals("VALE") && valbzFairValue != null) {
+                    SecurityContainer container = new SecurityContainer(splitted);
+                    if ((valbzFairValue.first - container.buying.get(0).getPrice()) > 10) {
+                        System.out.println("BUYING VALE");
+                        orderStack.addLast(new Order(lastOrderId++, "ADD", "VALE", true,
+                                10, container.buying.get(0).getPrice()));
+                        to_exchange.println(orderStack.peekLast().orderMessage());
+                        reply = from_exchange.readLine().trim();
+                        Order.waitForReply(portofolio, reply, orderStack);
+                        orderStack.addLast(new Order(lastOrderId++, "CONVERT", "VALE", true,
+                                portofolio.get("VALE")));
+                        to_exchange.println(orderStack.peekLast().orderMessage());
+                        reply = from_exchange.readLine().trim();
+                        Order.waitForReply(portofolio, reply, orderStack);
+                        System.out.println(portofolio);
+                    }
                 }
                 System.out.println(reply);
             }
