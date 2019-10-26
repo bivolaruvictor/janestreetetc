@@ -19,9 +19,9 @@ public class Order {
 
     public String orderMessage() {
         String directive = "";
-        if (dir) {
+        if (dir == true) {
             directive = directive + "BUY";
-        } else {
+        } else if (dir == false){
             directive = directive + "SELL";
         }
         return "ADD" + " " + id + " " + symbol + " " + directive + " " + price + " " + size;

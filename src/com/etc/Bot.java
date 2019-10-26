@@ -63,9 +63,8 @@ public class Bot
                             bondsSelling.add(new Bond(offerDetails[0], offerDetails[1]));
                         }
                     }
-
-                    Bond bestBuying = bondsBuying.get(0);
-                    Bond bestSelling = bondsSelling.get(0);
+                    System.out.println(bondsBuying);
+                    System.out.println(bondsSelling);
                     int howManyToBuy = 0;
                     for (Bond bond : bondsSelling) {
                         if (bond.getPrice() < 1000) {
