@@ -27,6 +27,18 @@ public class Order {
         return "ADD" + " " + id + " " + symbol + " " + directive + " " + price + " " + size;
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", symbol='" + symbol + '\'' +
+                ", dir=" + dir +
+                ", size=" + size +
+                ", price=" + price +
+                '}';
+    }
+
     public String getType() {
         return type;
     }
