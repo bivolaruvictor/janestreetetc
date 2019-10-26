@@ -109,6 +109,7 @@ public class Bot
                     orderStack.addLast(new Order(lastOrderId++, "CONVERT", "VALE", true,
                             portofolio.get("VALE")));
                     to_exchange.println(orderStack.peekLast().orderMessage());
+                    assert valbzFairValue != null;
                     orderStack.addLast(new Order(lastOrderId++, "ADD", "VALBZ", false,
                             5, valbzFairValue.first + 1));
                     to_exchange.println(orderStack.peekLast().orderMessage());
