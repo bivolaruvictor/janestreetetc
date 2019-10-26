@@ -90,7 +90,7 @@ public class Bot
                     SecurityContainer container = new SecurityContainer(splitted);
                     // valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
                     if (!valbzFairValue.first.equals(0) && !valbzFairValue.second.equals(0)) {
-                        if ((valbzFairValue.first - container.selling.get(0).getPrice()) > 10) {
+                        if ((valbzFairValue.first - container.selling.get(0).getPrice()) > 1) {
                             System.out.println("BUYING VALE");
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "VALE", true,
                                     2, container.selling.get(0).getPrice()));
