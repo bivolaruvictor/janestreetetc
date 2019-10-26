@@ -70,7 +70,7 @@ public class Bot
                     for (Bond bond : bondsSelling) {
                         if (bond.getPrice() > 1000) {
                             howManyToBuy += bond.getQuantity();
-                        } else if (bond.getPrice() >= 1000 && howManyToBuy != 0){
+                        } else if (howManyToBuy != 0){
                             orderStack.push(new Order(lastOrderId++, "ADD", "BOND",
                                     true, howManyToBuy, bond.getPrice()));
                             to_exchange.println(orderStack.peekLast().orderMessage());
@@ -82,7 +82,7 @@ public class Bot
                     for (Bond bond : bondsBuying) {
                         if (bond.getPrice() < 1000) {
                             howManyToSell += bond.getQuantity();
-                        } else if (bond.getPrice() <= 1000 && howManyToSell != 0){
+                        } else if (howManyToSell != 0){
                             orderStack.push(new Order(lastOrderId++, "ADD", "BOND",
                                     false, howManyToSell, bond.getPrice()));
                             to_exchange.println(orderStack.peekLast().orderMessage());
