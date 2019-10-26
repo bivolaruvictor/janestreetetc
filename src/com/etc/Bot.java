@@ -82,13 +82,14 @@ public class Bot
 //                    }
 //                }
                 else if (splitted[0].equals("BOOK") && splitted[1].equals("VALBZ")) {
+                    System.out.println("Am intrat pe valbzzzzzzzzzzzzzzzzzzzzz!!!!!!");
                     SecurityContainer container = new SecurityContainer(splitted);
                     valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
                     System.out.println("VALBZ FAIR VALUE = " + valbzFairValue.toString());
                 }
                 else if (splitted[0].equals("BOOK") && splitted[1].equals("VALE")) {
                     SecurityContainer container = new SecurityContainer(splitted);
-                    valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
+                    //valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
                     if (!valbzFairValue.first.equals(0) && !valbzFairValue.second.equals(0)) {
                         System.out.println("Am intrat pe primul!!!!!!");
                         if ((valbzFairValue.first - container.buying.get(0).getPrice()) > 10) {
