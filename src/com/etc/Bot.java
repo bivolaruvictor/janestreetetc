@@ -49,37 +49,37 @@ public class Bot
                         }
                     }
                 }
-                else if (splitted[0].equals("BOOK") && splitted[1].equals("BOND")) {
-                    SecurityContainer container = new SecurityContainer(splitted);
-                    int howManyToBuy = 0;
-                    Integer lastPrice = 0;
-                    for (Security security : container.buying) {
-                        if (security.getPrice() < 1000) {
-                            howManyToBuy += security.getQuantity();
-                            lastPrice = security.getPrice();
-                            orderStack.addLast(new Order(lastOrderId++, "ADD", "BOND",
-                                    true, howManyToBuy, lastPrice));
-                            to_exchange.println(orderStack.peekLast().orderMessage());
-                            System.out.println(orderStack.peekLast().orderMessage());
-                            reply = from_exchange.readLine().trim();
-                            System.out.println(reply);
-                            Order.waitForReply(portofolio, reply, orderStack);
-                        }
-                    }
-                    int howManyToSell = 0;
-                    for (Security security : container.selling) {
-                        if (security.getPrice() >= 1000) {
-                            howManyToSell = security.getQuantity();
-                            lastPrice = security.getPrice();
-                            orderStack.addLast(new Order(lastOrderId++, "ADD", "BOND",
-                                    false, howManyToSell, lastPrice));
-                            to_exchange.println(orderStack.peekLast().orderMessage());
-                            System.out.println(orderStack.peekLast().orderMessage());
-                            System.out.println(reply);
-                            Order.waitForReply(portofolio, reply, orderStack);
-                        }
-                    }
-                }
+//                else if (splitted[0].equals("BOOK") && splitted[1].equals("BOND")) {
+//                    SecurityContainer container = new SecurityContainer(splitted);
+//                    int howManyToBuy = 0;
+//                    Integer lastPrice = 0;
+//                    for (Security security : container.buying) {
+//                        if (security.getPrice() < 1000) {
+//                            howManyToBuy += security.getQuantity();
+//                            lastPrice = security.getPrice();
+//                            orderStack.addLast(new Order(lastOrderId++, "ADD", "BOND",
+//                                    true, howManyToBuy, lastPrice));
+//                            to_exchange.println(orderStack.peekLast().orderMessage());
+//                            System.out.println(orderStack.peekLast().orderMessage());
+//                            reply = from_exchange.readLine().trim();
+//                            System.out.println(reply);
+//                            Order.waitForReply(portofolio, reply, orderStack);
+//                        }
+//                    }
+//                    int howManyToSell = 0;
+//                    for (Security security : container.selling) {
+//                        if (security.getPrice() >= 1000) {
+//                            howManyToSell = security.getQuantity();
+//                            lastPrice = security.getPrice();
+//                            orderStack.addLast(new Order(lastOrderId++, "ADD", "BOND",
+//                                    false, howManyToSell, lastPrice));
+//                            to_exchange.println(orderStack.peekLast().orderMessage());
+//                            System.out.println(orderStack.peekLast().orderMessage());
+//                            System.out.println(reply);
+//                            Order.waitForReply(portofolio, reply, orderStack);
+//                        }
+//                    }
+//                }
                 else if (splitted[0].equals("BOOK") && splitted[1].equals("VALBZ")) {
                     SecurityContainer container = new SecurityContainer(splitted);
                     valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
