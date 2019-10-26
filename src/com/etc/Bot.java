@@ -97,7 +97,7 @@ public class Bot
                             to_exchange.println(orderStack.peekLast().orderMessage());
                             reply = from_exchange.readLine().trim();
                             Order.waitForReply(portofolio, reply, orderStack);
-                            orderStack.addLast(new Order(lastOrderId++, "CONVERT", "VALE", true,
+                            orderStack.addLast(new Order(lastOrderId++, "CONVERT", "VALE", false,
                                     portofolio.get("VALE")));
                             to_exchange.println(orderStack.peekLast().orderMessage());
                             reply = from_exchange.readLine().trim();
