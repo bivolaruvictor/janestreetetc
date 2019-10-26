@@ -25,7 +25,7 @@ public class Order {
             directive = directive + "SELL";
         }
         return "ADD" + " " + id + " " + symbol + " " + directive + " " + price + " " + size;
-    }Integer
+    }
 
     @Override
     public String toString() {
