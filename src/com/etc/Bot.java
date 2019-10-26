@@ -89,6 +89,7 @@ public class Bot
                             break;
                         }
                     }
+                    System.out.printf("%d %d", howManyToBuy, howManyToSell);
                 } else if (splitted[0].equals("ACK")) {
                     Order order = orderStack.peekLast();
                     if (Integer.parseInt(splitted[1]) == order.getId()) {
