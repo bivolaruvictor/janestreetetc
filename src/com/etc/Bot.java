@@ -93,10 +93,12 @@ public class Bot
                         if ((valbzFairValue.first - container.selling.get(0).getPrice()) > 1) {
                             System.out.println("BUYING VALE");
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "VALE", true,
-                                    2, container.selling.get(0).getPrice()));
+                                    10, container.selling.get(0).getPrice()));
                             to_exchange.println(orderStack.peekLast().orderMessage());
                             reply = from_exchange.readLine().trim();
                             Order.waitForReply(portofolio, reply, orderStack);
+
+
                             orderStack.addLast(new Order(lastOrderId++, "CONVERT", "VALE", false,
                                     portofolio.get("VALE")));
                             to_exchange.println(orderStack.peekLast().orderMessage());
@@ -114,6 +116,7 @@ public class Bot
 
                 }
                 System.out.println(reply);
+                System.out.println(portofolio);
             }
         }
         catch (Exception e)
