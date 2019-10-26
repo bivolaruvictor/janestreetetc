@@ -29,19 +29,21 @@ public class Bot
             HashMap<String, Integer> portofolio = new HashMap<>();
             to_exchange.println(("HELLO " + config.team_name).toUpperCase());
 
-            String reply = from_exchange.readLine().trim();
-            System.err.printf("The exchange replied: %s\n", reply);
+            while (true) {
+                String reply = from_exchange.readLine().trim();
+//            System.err.printf("The exchange replied: %s\n", reply);
 
-            String[] splitted = reply.split(" ");
-            if (splitted[0].equals("HELLO")) {
-                for (String security : splitted) {
-                    if (!security.equals("HELLO")) {
-                        String[] position = security.split(":");
-                        portofolio.put(position[0], Integer.parseInt(position[1]));
+                String[] splitted = reply.split(" ");
+                if (splitted[0].equals("HELLO")) {
+                    for (String security : splitted) {
+                        if (!security.equals("HELLO")) {
+                            String[] position = security.split(":");
+                            portofolio.put(position[0], Integer.parseInt(position[1]));
+                        }
                     }
                 }
+                System.out.println(reply);
             }
-            System.out.println(portofolio);
         }
         catch (Exception e)
         {
