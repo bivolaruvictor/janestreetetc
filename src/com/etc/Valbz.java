@@ -17,7 +17,7 @@ public class Valbz extends Security {
             buyFairValue += security.getPrice();
             count++;
         }
-        if (count == 0) {
+        if (count != 0) {
             buyFairValue /= count;
         } else {
             buyFairValue = 0;
@@ -29,7 +29,7 @@ public class Valbz extends Security {
             count++;
         }
         sellFairValue /= count;
-        if (count == 0){
+        if (count != 0){
             sellFairValue /= count;
         } else {
             sellFairValue = 0;
