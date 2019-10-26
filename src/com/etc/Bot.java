@@ -71,7 +71,7 @@ public class Bot
                             howManyToBuy += bond.getQuantity();
                         } else if (howManyToBuy != 0){
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "BOND",
-                                    true, howManyToBuy, 999));
+                                    true, howManyToBuy, 1000));
                             to_exchange.println(orderStack.peekLast().orderMessage());
                             System.out.println(orderStack.peekLast().orderMessage());
                             break;
