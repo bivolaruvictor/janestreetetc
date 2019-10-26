@@ -49,6 +49,7 @@ public class Bot
                     for (int i = 3; i < splitted.length; i++) {
                         if (splitted[i].equals("SELL")) {
                             putInSelling = true;
+                            continue;
                         }
                         if (!putInSelling) {
                             String[] offerDetails = splitted[i].split(":");
