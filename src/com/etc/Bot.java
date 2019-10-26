@@ -38,6 +38,7 @@ public class Bot
 
             while (true) {
                 Integer lastOrderId = 1;
+                Pair<Integer> valbzFairValue = null;
                 String reply = from_exchange.readLine().trim();
 //            System.err.printf("The exchange replied: %s\n", reply);
 
@@ -50,27 +51,28 @@ public class Bot
                         }
                     }
                 } else if (splitted[0].equals("BOOK") && splitted[1].equals("BOND")) {
-                    ArrayList<Security> bondsBuying = new ArrayList<>();
-                    ArrayList<Security> bondsSelling = new ArrayList<>();
-                    boolean putInSelling = false;
-                    for (int i = 3; i < splitted.length; i++) {
-                        if (splitted[i].equals("SELL")) {
-                            putInSelling = true;
-                            continue;
-                        }
-                        if (!putInSelling) {
-                            String[] offerDetails = splitted[i].split(":");
-                            bondsBuying.add(new Security(offerDetails[0], offerDetails[1]));
-                        } else {
-                            String[] offerDetails = splitted[i].split(":");
-                            bondsSelling.add(new Security(offerDetails[0], offerDetails[1]));
-                        }
-                    }
-                    System.out.println(bondsBuying);
-                    System.out.println(bondsSelling);
+//                    ArrayList<Security> bondsBuying = new ArrayList<>();
+//                    ArrayList<Security> bondsSelling = new ArrayList<>();
+//                    boolean putInSelling = false;
+//                    for (int i = 3; i < splitted.length; i++) {
+//                        if (splitted[i].equals("SELL")) {
+//                            putInSelling = true;
+//                            continue;
+//                        }
+//                        if (!putInSelling) {
+//                            String[] offerDetails = splitted[i].split(":");
+//                            bondsBuying.add(new Security(offerDetails[0], offerDetails[1]));
+//                        } else {
+//                            String[] offerDetails = splitted[i].split(":");
+//                            bondsSelling.add(new Security(offerDetails[0], offerDetails[1]));
+//                        }
+//                    }
+                    SecurityContainer container = new SecurityContainer(splitted);
+                    System.out.println(container.buying);
+                    System.out.println(container.selling);
                     int howManyToBuy = 0;
                     Integer lastPrice = 0;
-                    for (Security security : bondsSelling) {
+                    for (Security security : container.buying) {
                         if (security.getPrice() < 1000) {
                             howManyToBuy += security.getQuantity();
                             lastPrice = security.getPrice();
@@ -84,7 +86,7 @@ public class Bot
                         }
                     }
                     int howManyToSell = 0;
-                    for (Security security : bondsBuying) {
+                    for (Security security : container.selling) {
                         if (security.getPrice() >= 1000) {
                             howManyToSell = security.getQuantity();
                             lastPrice = security.getPrice();
@@ -96,6 +98,11 @@ public class Bot
                             Order.waitForReply(portofolio, reply, orderStack);
                         }
                     }
+                } else if (splitted[0].equals("BOOK") && splitted[1].equals("VALBZ")) {
+                    SecurityContainer container = new SecurityContainer(splitted);
+                    System.out.println(container.buying);
+                    System.out.println(container.selling);
+                    valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
                 }
                 System.out.println(reply);
             }
