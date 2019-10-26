@@ -37,6 +37,7 @@ public class Bot
             to_exchange.println(("HELLO " + config.team_name).toUpperCase());
             LinkedList<Order> orderStack = new LinkedList<>();
             Pair<Integer> valbzFairValue = new Pair<>(0, 0);
+            Pair<Integer> valeFairValue = new Pair<>(0, 0);
             Integer lastOrderId = 1;
 
             while (true) {
@@ -83,12 +84,34 @@ public class Bot
                 }
                 else if (splitted[0].equals("BOOK") && splitted[1].equals("VALBZ")) {
                     SecurityContainer container = new SecurityContainer(splitted);
-                    valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
-                    System.out.println("VALBZ FAIR VALUE = " + valbzFairValue.toString());
+                    valbzFairValue = Security.computeFairValue(container.buying, container.selling);
+                    if (!valeFairValue.first.equals(0) && !valeFairValue.second.equals(0)) {
+                        if ((valeFairValue.first - container.selling.get(0).getPrice()) > 1) {
+                            System.out.println("BUYING VALBZ");
+                            orderStack.addLast(new Order(lastOrderId++, "ADD", "VALBZ", true,
+                                    10, container.selling.get(0).getPrice()));
+                            to_exchange.println(orderStack.peekLast().orderMessage());
+                            reply = from_exchange.readLine().trim();
+                            Order.waitForReply(portofolio, reply, orderStack);
+
+                            orderStack.addLast(new Order(lastOrderId++, "CONVERT", "VALBZ", false,
+                                    portofolio.get("VALBZ")));
+                            to_exchange.println(orderStack.peekLast().orderMessage());
+                            reply = from_exchange.readLine().trim();
+                            Order.waitForReply(portofolio, reply, orderStack);
+
+
+                            orderStack.addLast(new Order(lastOrderId++, "ADD", "VALE", false,
+                                    portofolio.get("VALE"), valbzFairValue.first + 1));
+                            to_exchange.println(orderStack.peekLast().orderMessage());
+                            reply = from_exchange.readLine().trim();
+                            Order.waitForReply(portofolio, reply, orderStack);
+                        }
+                    }
                 }
                 else if (splitted[0].equals("BOOK") && splitted[1].equals("VALE")) {
                     SecurityContainer container = new SecurityContainer(splitted);
-                    // valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
+                    valeFairValue = Security.computeFairValue(container.buying, container.selling);
                     if (!valbzFairValue.first.equals(0) && !valbzFairValue.second.equals(0)) {
                         if ((valbzFairValue.first - container.selling.get(0).getPrice()) > 1) {
                             System.out.println("BUYING VALE");
@@ -97,7 +120,6 @@ public class Bot
                             to_exchange.println(orderStack.peekLast().orderMessage());
                             reply = from_exchange.readLine().trim();
                             Order.waitForReply(portofolio, reply, orderStack);
-
 
                             orderStack.addLast(new Order(lastOrderId++, "CONVERT", "VALE", false,
                                     portofolio.get("VALE")));
@@ -113,7 +135,6 @@ public class Bot
                             Order.waitForReply(portofolio, reply, orderStack);
                         }
                     }
-
                 }
                 System.out.println(reply);
                 System.out.println(portofolio);
