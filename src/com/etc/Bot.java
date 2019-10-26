@@ -89,6 +89,7 @@ public class Bot
                 else if (splitted[0].equals("BOOK") && splitted[1].equals("VALE")) {
                     SecurityContainer container = new SecurityContainer(splitted);
                     if (!valbzFairValue.first.equals(0) && !valbzFairValue.second.equals(0)) {
+                        System.out.println("Am intrat pe primul!!!!!!");
                         if ((valbzFairValue.first - container.buying.get(0).getPrice()) > 10) {
                             System.out.println("BUYING VALE");
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "VALE", true,
