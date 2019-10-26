@@ -88,11 +88,9 @@ public class Bot
                 }
                 else if (splitted[0].equals("BOOK") && splitted[1].equals("VALE")) {
                     SecurityContainer container = new SecurityContainer(splitted);
-                    valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
+                    // valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
                     if (!valbzFairValue.first.equals(0) && !valbzFairValue.second.equals(0)) {
-                        System.out.println("Am intrat pe primul!!!!!!");
                         if ((valbzFairValue.first - container.selling.get(0).getPrice()) < 10) {
-                            System.out.println("Am intrat pe al doilea!!!!!!");
                             System.out.println("BUYING VALE");
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "VALE", true,
                                     2, container.selling.get(0).getPrice()));
@@ -104,6 +102,8 @@ public class Bot
                             to_exchange.println(orderStack.peekLast().orderMessage());
                             reply = from_exchange.readLine().trim();
                             Order.waitForReply(portofolio, reply, orderStack);
+
+
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "VALBZ", false,
                                     5, valbzFairValue.first + 1));
                             to_exchange.println(orderStack.peekLast().orderMessage());
