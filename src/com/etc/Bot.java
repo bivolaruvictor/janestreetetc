@@ -147,6 +147,17 @@ public class Bot
                             Order.waitForReply(portofolio, reply, orderStack);
                         }
                     }
+                } else if (splitted[0].equals("BOOK") && (splitted[1].equals("GS") || splitted[1].equals("MS") ||
+                        splitted[1].equals("WFC") || splitted[1].equals("XLF"))) {
+                    SecurityContainer container = new SecurityContainer(splitted);
+                    String type = ;
+                    if (container.buying.get(0).getPrice() > container.selling.get(0).getPrice()) {
+                        orderStack.addLast(new Order(lastOrderId++, "ADD", splitted[1], false,
+                                10, container.buying.get(0).getPrice() + 1));
+                        to_exchange.println(orderStack.peekLast().orderMessage());
+                        reply = from_exchange.readLine().trim();
+                        Order.waitForReply(portofolio, reply, orderStack);
+                    }
                 }
                 System.out.println(reply);
                 System.out.println(portofolio);
