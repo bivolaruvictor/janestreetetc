@@ -19,6 +19,6 @@ public class Valbz extends Security {
         if (sell.size() > 0) {
             sellFairValue = sell.get(0).getPrice();
         }
-        return new Pair<>(buyFairValue, sellFairValue);
+        return new Pair<Integer>(buyFairValue, sellFairValue);
     }
 }
