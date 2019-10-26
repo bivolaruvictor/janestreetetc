@@ -79,7 +79,7 @@ public class Bot
                     }
                     int howManyToSell = 0;
                     for (Bond bond : bondsBuying) {
-                        if (bond.getPrice() > 1000) {
+                        if (bond.getPrice() >= 1000) {
                             howManyToSell += bond.getQuantity();
                         } else if (howManyToSell != 0){
                             orderStack.push(new Order(lastOrderId++, "ADD", "BOND",
