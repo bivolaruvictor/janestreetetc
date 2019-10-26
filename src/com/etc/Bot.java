@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Timer;
 
 public class Bot
 {
@@ -104,15 +105,12 @@ public class Bot
                     System.out.println("BUYING VALE");
                     orderStack.addLast(new Order(lastOrderId++, "ADD", "VALE", true,
                             10, container.selling.get(0).getPrice()));
-                    to_exchange.println(orderStack.peekLast().orderMessage());
-                    reply = from_exchange.readLine().trim();
                     Order.waitForReply(portofolio, reply, orderStack);
                     orderStack.addLast(new Order(lastOrderId++, "CONVERT", "VALE", true,
                             portofolio.get("VALE")));
                     to_exchange.println(orderStack.peekLast().orderMessage());
-                    reply = from_exchange.readLine().trim();
-                    Order.waitForReply(portofolio, reply, orderStack);
-                    System.out.println(portofolio);
+                    orderStack.addLast(new Order(lastOrderId++, "ADD", "VALBZ", false,
+                            5, valbzFairValue.first + 1));
                 }
                 System.out.println(reply);
             }
