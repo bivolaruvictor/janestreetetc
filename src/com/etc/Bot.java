@@ -91,7 +91,7 @@ public class Bot
                     valbzFairValue = Valbz.computeFairValue(container.buying, container.selling);
                     if (!valbzFairValue.first.equals(0) && !valbzFairValue.second.equals(0)) {
                         System.out.println("Am intrat pe primul!!!!!!");
-                        if ((valbzFairValue.first - container.selling.get(0).getPrice()) > 10) {
+                        if ((valbzFairValue.first - container.selling.get(0).getPrice()) < 10) {
                             System.out.println("Am intrat pe al doilea!!!!!!");
                             System.out.println("BUYING VALE");
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "VALE", true,
