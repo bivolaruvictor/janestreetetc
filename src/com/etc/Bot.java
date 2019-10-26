@@ -36,10 +36,10 @@ public class Bot
             HashMap<String, Integer> portofolio = new HashMap<>();
             to_exchange.println(("HELLO " + config.team_name).toUpperCase());
             LinkedList<Order> orderStack = new LinkedList<>();
+            Pair<Integer> valbzFairValue = new Pair<>(0, 0);
 
             while (true) {
                 Integer lastOrderId = 1;
-                Pair<Integer> valbzFairValue = new Pair<>(0, 0);
                 String reply = from_exchange.readLine().trim();
                 String[] splitted = reply.split(" ");
                 if (splitted[0].equals("HELLO")) {
