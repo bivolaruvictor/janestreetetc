@@ -108,7 +108,7 @@ public class Bot
                             Order.waitForReply(portofolio, reply, orderStack);
                         } else if (valbzFairValue.first > valbzFairValue.second) {
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "VALBZ", false,
-                                    portofolio.get("VALBZ"), valbzFairValue.first + 1));
+                                    10, valbzFairValue.first + 1));
                             to_exchange.println(orderStack.peekLast().orderMessage());
                             reply = from_exchange.readLine().trim();
                             Order.waitForReply(portofolio, reply, orderStack);
@@ -141,7 +141,7 @@ public class Bot
                             Order.waitForReply(portofolio, reply, orderStack);
                         } else if (valeFairValue.first > valeFairValue.second) {
                             orderStack.addLast(new Order(lastOrderId++, "ADD", "VALE", false,
-                                    portofolio.get("VALE"), valeFairValue.first + 1));
+                                    10, valeFairValue.first + 1));
                             to_exchange.println(orderStack.peekLast().orderMessage());
                             reply = from_exchange.readLine().trim();
                             Order.waitForReply(portofolio, reply, orderStack);
